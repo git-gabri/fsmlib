@@ -33,8 +33,7 @@ class moore_fsm {
     public:
         //---------------------------------------------------------------------------------------
         //Costructors and destructor
-        moore_fsm(const size_t& num_inputs, const size_t& num_outputs);
-        moore_fsm(const size_t& num_inputs, const size_t& num_outputs, const size_t& num_states);
+        moore_fsm(const size_t& num_inputs, const size_t& num_outputs, const size_t& num_states = 0);
         ~moore_fsm() = default;
 
         //---------------------------------------------------------------------------------------
@@ -88,8 +87,8 @@ class moore_fsm {
 
         //---------------------------------------------------------------------------------------
         //Saving/loading the machine
-        //std::vector<size_t> vec_ify();
-        //int devec_ify(std::vector<size_t>& v);
+        //friend std::string to_string(const moore_fsm& mfsm);
+        //friend moore_fsm from_string(const std::string& str);
 };
 
 #endif

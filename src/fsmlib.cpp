@@ -1,24 +1,27 @@
 #include "fsmlib.hpp"
 #include <algorithm>
+#include <sstream>
+
+#include <iostream>
 
 //------------------------------------------------------------------------------------------------------------------------------------------
-//Constructors
-//First constructor
-moore_fsm::moore_fsm(const size_t& _num_inputs, const size_t& _num_outputs) :
-num_inputs(_num_inputs), num_outputs(_num_outputs)
-{
-    current_inputs = std::vector<size_t>(num_inputs, 0);
-    current_outputs = std::vector<size_t>(num_outputs, 0);
-    current_state_id = 0;
-}
-
-//Second constructor
+//Constructor
 moore_fsm::moore_fsm(const size_t& _num_inputs, const size_t& _num_outputs, const size_t& _num_states) :
 num_inputs(_num_inputs), num_outputs(_num_outputs)
 {
+    //Configure inputs and their names
     current_inputs = std::vector<size_t>(num_inputs, 0);
+    for(size_t i = 0; i < _num_inputs; ++i)
+        name_input_id_map[std::to_string(i)] = i;
+
+    //Configure outputs and their names
     current_outputs = std::vector<size_t>(num_outputs, 0);
+    for(size_t i = 0; i < _num_outputs; ++i)
+        name_output_id_map[std::to_string(i)] = i;
+
+    //Pre allocate space for the states
     machine_states.reserve(_num_states);
+
     current_state_id = 0;
 }
 //Destructor is default type
@@ -203,3 +206,43 @@ int moore_fsm::step_machine(const size_t& num_steps){
 
     return ret_val;
 }
+
+//------------------------------------------------------------------------------------------------------------------------------------------
+//Saving/loading the machine
+/*
+std::string to_string(const moore_fsm& mfsm){
+    std::stringstream ret;
+    ret << "{";
+
+    //Load the number of inputs, outputs and states
+    ret << "\"" << "num_inputs" << "\":" << mfsm.num_inputs << ",";
+    ret << "\"" << "num_outputs" << "\":" << mfsm.num_outputs << ",";
+    ret << "\"" << "num_states" << "\":" << mfsm.machine_states.size() << ",";
+
+    //Load the aliases of the inputs
+    ret << "\"input_names\":[";
+    for(auto it = mfsm.name_input_id_map.begin(); it != mfsm.name_input_id_map.end(); ++it)
+        ret << "\"" << it->first << "\",\"" << it->second << "\"" << ",";
+    ret.seekp(-1, ret.cur);
+    ret << "],";
+
+    //Load the aliases of the outputs
+    ret << "\"output_names\":[";
+    for(auto it = mfsm.name_output_id_map.begin(); it != mfsm.name_output_id_map.end(); ++it)
+        ret << "\"" << it->first << "\",\"" << it->second << "\"" << ",";
+    ret.seekp(-1, ret.cur);
+    ret << "],";
+
+    //Load the aliases of the states
+    ret << "\"state_names\":[";
+    for(auto it = mfsm.name_state_id_map.begin(); it != mfsm.name_state_id_map.end(); ++it)
+        ret << "\"" << it->first << "\",\"" << it->second << "\"" << ",";
+    ret.seekp(-1, ret.cur);
+    ret << "]";
+
+    //how do I serialize std::function-s?
+
+    ret << "}";
+    return ret.str();
+}
+*/
