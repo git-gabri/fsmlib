@@ -47,8 +47,8 @@ class moore_fsm {
         int set_input(const size_t& id, const size_t& value);
         int set_input(const std::string& name, const size_t& value);
         int set_inputs(const std::vector<size_t>& in);
-        const std::vector<size_t>& get_output(const size_t& id) const;
-        const std::vector<size_t>& get_output(const std::string& name) const;
+        const size_t get_output(const size_t& id) const;
+        const size_t get_output(const std::string& name) const;
         const std::vector<size_t>& get_outputs() const;
 
         //---------------------------------------------------------------------------------------

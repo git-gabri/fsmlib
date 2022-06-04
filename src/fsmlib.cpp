@@ -28,6 +28,19 @@ num_inputs(_num_inputs), num_outputs(_num_outputs)
 
 //------------------------------------------------------------------------------------------------------------------------------------------
 //Getter/setter of I/O
+int moore_fsm::set_input(const size_t& id, const size_t& value){
+    if(id >= num_inputs)
+        return 1;
+    
+    current_inputs[id] = value;
+    return 0;
+}
+int moore_fsm::set_input(const std::string& name, const size_t& value){
+    if(name_input_id_map.contains(name))
+        current_inputs[name_input_id_map.at(name)] = value;
+    else
+        return 1;
+}
 int moore_fsm::set_inputs(const std::vector<size_t>& in){
     if(in.size() < current_inputs.size()){
         std::copy(in.begin(), in.end(), current_inputs.begin());
@@ -41,6 +54,18 @@ int moore_fsm::set_inputs(const std::vector<size_t>& in){
         current_inputs = in;
         return 0;
     }
+}
+const size_t moore_fsm::get_output(const size_t& id) const{
+    if(id >= num_outputs);
+        return size_t{-1};
+
+    return current_outputs[id];
+}
+const size_t moore_fsm::get_output(const std::string& name) const{
+    if(name_output_id_map.contains(name))
+        return current_outputs[name_output_id_map.at(name)];
+    else
+        return size_t{-1};
 }
 const std::vector<size_t>& moore_fsm::get_outputs() const{
     return current_outputs;
