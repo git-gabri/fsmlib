@@ -36,9 +36,10 @@ int moore_fsm::set_input(const size_t& id, const size_t& value){
     return 0;
 }
 int moore_fsm::set_input(const std::string& name, const size_t& value){
-    if(name_input_id_map.contains(name))
+    if(name_input_id_map.contains(name)){
         current_inputs[name_input_id_map.at(name)] = value;
-    else
+        return 0;
+    } else
         return 1;
 }
 int moore_fsm::set_inputs(const std::vector<size_t>& in){
@@ -55,17 +56,17 @@ int moore_fsm::set_inputs(const std::vector<size_t>& in){
         return 0;
     }
 }
-const size_t moore_fsm::get_output(const size_t& id) const{
-    if(id >= num_outputs);
-        return size_t{-1};
+size_t moore_fsm::get_output(const size_t& id) const{
+    if(id >= num_outputs)
+        return -1;
 
     return current_outputs[id];
 }
-const size_t moore_fsm::get_output(const std::string& name) const{
+size_t moore_fsm::get_output(const std::string& name) const{
     if(name_output_id_map.contains(name))
         return current_outputs[name_output_id_map.at(name)];
     else
-        return size_t{-1};
+        return -1;
 }
 const std::vector<size_t>& moore_fsm::get_outputs() const{
     return current_outputs;
@@ -173,7 +174,7 @@ std::string moore_fsm::get_current_state_name() const {
 //Associating names to states
 int moore_fsm::set_state_name(const size_t& state_id, const std::string& name){
     if(state_id >= machine_states.size())
-        return 1;
+    return 1;
 
     std::erase_if(name_state_id_map, [&](const auto& e) -> bool{return e.second == state_id;});
     name_state_id_map[name] = state_id;
@@ -213,7 +214,7 @@ int moore_fsm::set_current_state(const std::string& name){
     }
 }
 size_t moore_fsm::step_machine(){
-    const auto next_state_id = machine_states[current_state_id].transition_fn(current_inputs, name_input_id_map);
+    const auto next_state_id = machine_states[current_state_id].transition_fn(current_inputs, name_input_id_map, name_state_id_map);
 
     if(next_state_id >= machine_states.size())
         return -1;

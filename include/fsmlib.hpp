@@ -6,7 +6,8 @@
 #include <map>
 #include <functional>
 
-using state_transition_fn = std::function<size_t(const std::vector<size_t>& inputs, const std::map<std::string, size_t>& name_to_input_id)>;
+#define tr_lamba ([[maybe_unused]] auto inputs, [[maybe_unused]] auto name_to_input_id, [[maybe_unused]] auto name_to_state_id)
+using state_transition_fn = std::function<size_t(const std::vector<size_t>& inputs, const std::map<std::string, size_t>& name_to_input_id, const std::map<std::string, size_t>& name_to_state_id)>;
 
 class moore_fsm {
     private:
@@ -47,8 +48,8 @@ class moore_fsm {
         int set_input(const size_t& id, const size_t& value);
         int set_input(const std::string& name, const size_t& value);
         int set_inputs(const std::vector<size_t>& in);
-        const size_t get_output(const size_t& id) const;
-        const size_t get_output(const std::string& name) const;
+        size_t get_output(const size_t& id) const;
+        size_t get_output(const std::string& name) const;
         const std::vector<size_t>& get_outputs() const;
 
         //---------------------------------------------------------------------------------------
