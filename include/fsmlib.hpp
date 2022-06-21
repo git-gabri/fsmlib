@@ -70,8 +70,6 @@ class moore_fsm {
         size_t add_state(const std::string& name, const std::vector<size_t>& outputs, const state_transition_fn& transition_fn);
         int remove_state(const size_t& state_id);
         int remove_state(const std::string& name);
-        size_t get_current_state_id() const;
-        std::string get_current_state_name() const;
 
         //---------------------------------------------------------------------------------------
         //Associating names to states
@@ -83,6 +81,8 @@ class moore_fsm {
         //Simulation of the machine
         int set_current_state(const size_t& state_id);
         int set_current_state(const std::string& name);
+        size_t get_current_state_id() const;
+        std::string get_current_state_name() const;
         size_t step_machine();
         int step_machine(const size_t& num_steps);
 

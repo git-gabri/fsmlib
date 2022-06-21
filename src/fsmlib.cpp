@@ -159,16 +159,6 @@ int moore_fsm::remove_state(const std::string& name){
         return remove_state(id);
     }
 }
-size_t moore_fsm::get_current_state_id() const {
-    return current_state_id;
-}
-std::string moore_fsm::get_current_state_name() const {
-    const auto it = std::find_if(name_state_id_map.begin(), name_state_id_map.end(), [&](const auto& e) -> bool{return e.second == current_state_id;});
-    if(it != std::end(name_state_id_map))
-        return it->first;
-    else
-        return "";
-}
 
 //------------------------------------------------------------------------------------------------------------------------------------------
 //Associating names to states
@@ -212,6 +202,16 @@ int moore_fsm::set_current_state(const std::string& name){
 
         return set_current_state(id);
     }
+}
+size_t moore_fsm::get_current_state_id() const {
+    return current_state_id;
+}
+std::string moore_fsm::get_current_state_name() const {
+    const auto it = std::find_if(name_state_id_map.begin(), name_state_id_map.end(), [&](const auto& e) -> bool{return e.second == current_state_id;});
+    if(it != std::end(name_state_id_map))
+        return it->first;
+    else
+        return "";
 }
 size_t moore_fsm::step_machine(){
     const auto next_state_id = machine_states[current_state_id].transition_fn(current_inputs, name_input_id_map, name_state_id_map);
