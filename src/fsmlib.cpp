@@ -141,6 +141,8 @@ size_t moore_fsm::add_state(const std::string& name, const std::vector<size_t>& 
 
     return last_state_id;
 }
+/*
+This code doesn't re-map the names to the states. It's a feature that has to be added.
 int moore_fsm::remove_state(const size_t& state_id){
     if(state_id >= machine_states.size())
         return 1;
@@ -159,6 +161,7 @@ int moore_fsm::remove_state(const std::string& name){
         return remove_state(id);
     }
 }
+*/
 
 //------------------------------------------------------------------------------------------------------------------------------------------
 //Associating names to states
@@ -224,11 +227,11 @@ size_t moore_fsm::step_machine(){
 
     return current_state_id;
 }
-int moore_fsm::step_machine(const size_t& num_steps){
+size_t moore_fsm::step_machine(const size_t& num_steps){
     int ret_val = 0;
 
     for(size_t i = 0; i < num_steps; ++i)
-        step_machine();
+        ret_val = step_machine();
 
     return ret_val;
 }
